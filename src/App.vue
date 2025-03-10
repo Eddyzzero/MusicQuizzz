@@ -1,5 +1,5 @@
 <template>
-  <h1 class="todo">Jddd</h1>
+  <h1 class="todo">L'app marche</h1>
 </template>
 
 <script>

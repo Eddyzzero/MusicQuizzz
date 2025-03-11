@@ -1,7 +1,20 @@
 <template>
-  <h1 class="todo">L'app marche</h1>
+  <header>
+    <QuizzView />
+  </header>
 </template>
 
-<script>
 
+<script>
+import QuizzView from './views/QuizzView.vue';
+
+export default {
+  name: 'App',
+
+  components: {
+    QuizzView,
+
+  }
+}
 </script>
+<style></style>

@@ -12,7 +12,7 @@ export default {
     name: 'QuizzView',
 
     components: {
-        TitleComponent,
+        TitleComponent
     }
 }
 </script>

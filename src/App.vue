@@ -1,7 +1,5 @@
 <template>
-  <header>
     <QuizzView />
-  </header>
 </template>
 
 

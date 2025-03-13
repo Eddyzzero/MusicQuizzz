@@ -1,8 +1,6 @@
 <template>
   <nav class="navbar">
-    <div class="navbar-logo">
-      <img src="path/to/logo.png" alt="Logo" />
-    </div>
+    <div class="navbar-logo">Music Quiz</div>
     <ul class="navbar-links">
       <li><a href="/">Accueil</a></li>
       <li><a href="/categories">Catégories</a></li>

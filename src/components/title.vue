@@ -75,6 +75,8 @@ export default {
       }
     },
 
+    // Changement de catégorie
+    // On change la catégorie et on recharge les questions
     async changeCategory(newCategoryId) {
       this.categoryId = newCategoryId;
       await this.loadQuestions();

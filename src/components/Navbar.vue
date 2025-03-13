@@ -22,6 +22,7 @@ export default {
   padding: 1rem 2rem;
   background-color: var(--primary-color);
   color: var(--white);
+  font-family: var(--font-family);
 }
 
 .navbar-logo img {

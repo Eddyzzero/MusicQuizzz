@@ -3,7 +3,11 @@
 :root {
     --primary-color: #27667B;
     --secondary-color: #B143D60;
+<<<<<<< HEAD
     --dark-green: #lA0C878;
+=======
+    --dark-green: #A0C878;
+>>>>>>> feature/Button
     --light-green: #DDEB9D;
 
     --dark-grey: #333;
@@ -69,8 +73,11 @@ q:before, q:after {
 table {
     border-collapse: collapse;
     border-spacing: 0;
+<<<<<<< HEAD
 }
 
 .todo {
     color: var(--primary-color);
+=======
+>>>>>>> feature/Button
 }

@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <QuizzView />
   <Button />
 </template>
@@ -16,4 +17,22 @@ export default {
   },
 };
 </script>
+=======
+  <div id="app">
+    <NavbarComponent />
+    <router-view />
+  </div>
+</template>
+
+<script>
+import NavbarComponent from "../src/components/Navbar.vue";
+
+export default {
+  components: {
+    NavbarComponent,
+  },
+};
+</script>
+
+>>>>>>> feature/Navbar
 <style></style>

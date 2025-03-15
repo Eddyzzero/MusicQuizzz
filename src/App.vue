@@ -1,18 +1,19 @@
 <template>
-    <QuizzView />
+  <QuizzView />
+  <Button />
 </template>
 
-
 <script>
-import QuizzView from './views/QuizzView.vue';
+import Button from "./components/Button.vue";
+import QuizzView from "./views/QuizzView.vue";
 
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
     QuizzView,
-
-  }
-}
+    Button,
+  },
+};
 </script>
 <style></style>

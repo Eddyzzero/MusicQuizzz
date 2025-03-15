@@ -1,19 +1,18 @@
 <template>
-    <header>
-        <TitleComponent />
-    </header>
+  <header>
+    <TitleComponent />
+  </header>
 </template>
 
-
 <script>
-import TitleComponent from '../components/title.vue'
+import TitleComponent from "../components/title.vue";
 
 export default {
-    name: 'QuizzView',
+  name: "QuizzView",
 
-    components: {
-        TitleComponent
-    }
-}
+  components: {
+    TitleComponent,
+  },
+};
 </script>
 <style></style>

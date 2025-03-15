@@ -1,25 +1,37 @@
 import { createRouter, createWebHistory } from "vue-router";
 
+// Import des pages
+import HomeView from "@/views/HomeView.vue";
+import QuizView from "@/views/QuizzView.vue";
+import ResultView from "@/views/ResultView.vue";
+import NotFoundView from "@/views/NotFoundView.vue";
+
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: () => import("../views/HomeView.vue"),
+    name: "Home",
+    component: HomeView,
   },
   {
-    path: "/quiz/:id",
-    name: "quiz",
-    component: () => import("../views/QuizzView.vue"),
+    path: "/quizz/:id",
+    name: "Quizz",
+    component: QuizView,
+    props: true,
   },
   {
-    path: "/results",
-    name: "results",
-    component: () => import("../views/ResultView.vue"),
+    path: "/result",
+    name: "Result",
+    component: ResultView,
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: NotFoundView,
   },
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(),
   routes,
 });
 

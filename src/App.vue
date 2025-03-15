@@ -1,4 +1,6 @@
 <template>
+  <h1>Quiz Musical</h1>
+  <router-view></router-view>
   <QuizzView />
   <Button />
 </template>
@@ -17,3 +19,4 @@ export default {
 };
 </script>
 <style></style>
+

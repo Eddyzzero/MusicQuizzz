@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import Btn from "./Button.vue"; // Import the Btn component
+import Button from "./Button.vue"; // Import the Btn component
 
 export default {
   name: "Answer",

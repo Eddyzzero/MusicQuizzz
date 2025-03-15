@@ -4,6 +4,7 @@
   <Button />
 </template>
 
+<<<<<<< HEAD
 <script>
 import Button from "./components/Button.vue";
 import QuizzView from "./views/QuizzView.vue";
@@ -36,3 +37,6 @@ export default {
 
 >>>>>>> feature/Navbar
 <style></style>
+=======
+<script></script>
+>>>>>>> feature/Answer

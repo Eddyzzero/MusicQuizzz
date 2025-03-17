@@ -60,7 +60,7 @@ export default {
       }
     },
     selectCategory(category) {
-      this.$emit("categorySelected", category);
+      this.$emit("categorySelected", category.id);
     },
   },
 };

@@ -1,16 +1,9 @@
 <template>
-<<<<<<< HEAD
-  <h1>Quiz Musical</h1>
-  <router-view></router-view>
-  <QuizzView />
-  <Button />
-=======
   <div id="app">
     <NavbarComponent />
-    <Answer />
+    <Answer :answers="answers" />
     <router-view />
   </div>
->>>>>>> d5d45fa7bc7de2da22aa0d2c18d8943f82fe309e
 </template>
 
 <script>
@@ -18,6 +11,14 @@ import NavbarComponent from "../src/components/Navbar.vue";
 import Answer from "./components/Answer.vue";
 
 export default {
+  name: "App",
+
+  data() {
+    return {
+      answers: [],
+    };
+  },
+
   components: {
     NavbarComponent,
     Answer,
@@ -26,4 +27,3 @@ export default {
 </script>
 
 <style></style>
-

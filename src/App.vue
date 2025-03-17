@@ -1,22 +1,29 @@
 <template>
+<<<<<<< HEAD
   <h1>Quiz Musical</h1>
   <router-view></router-view>
   <QuizzView />
   <Button />
+=======
+  <div id="app">
+    <NavbarComponent />
+    <Answer />
+    <router-view />
+  </div>
+>>>>>>> d5d45fa7bc7de2da22aa0d2c18d8943f82fe309e
 </template>
 
 <script>
-import Button from "./components/Button.vue";
-import QuizzView from "./views/QuizzView.vue";
+import NavbarComponent from "../src/components/Navbar.vue";
+import Answer from "./components/Answer.vue";
 
 export default {
-  name: "App",
-
   components: {
-    QuizzView,
-    Button,
+    NavbarComponent,
+    Answer,
   },
 };
 </script>
+
 <style></style>
 

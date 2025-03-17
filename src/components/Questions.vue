@@ -1,11 +1,5 @@
-<template>
-    <span class="material-symbols-outlined">
-        search
-    </span>
-</template>
+<template></template>
 
-<script>
-
-</script>
+<script></script>
 
 <style></style>

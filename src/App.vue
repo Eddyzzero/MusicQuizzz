@@ -1,7 +1,3 @@
-<template>
-  <h1 class="todo">L'app marche</h1>
-</template>
+<template></template>
 
-<script>
-
-</script>
+<script></script>

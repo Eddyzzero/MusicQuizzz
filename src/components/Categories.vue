@@ -37,6 +37,15 @@ export default {
     this.fetchCategories();
   },
   methods: {
+    async getCategories() {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/categories`);
+        return response.data;
+      } catch (error) {
+        console.error("Erreur dans getCategories:", error);
+        throw error;
+      }
+    },
     async fetchCategories() {
       this.loading = true;
       try {

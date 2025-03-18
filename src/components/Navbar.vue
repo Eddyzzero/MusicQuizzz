@@ -1,9 +1,13 @@
 <template>
   <nav class="navbar">
-    <div class="navbar-logo">Music Quiz</div>
+    <a href="/" class="navbar-logo">Music Quiz</a>
     <ul class="navbar-links">
-      <li><a href="/">Accueil</a></li>
-      <li><a href="/categories">Catégories</a></li>
+      <li>
+        <router-link to="/">Accueil</router-link>
+      </li>
+      <li>
+        <router-link to="/categories">Catégories</router-link>
+      </li>
     </ul>
   </nav>
 </template>
@@ -25,8 +29,11 @@ export default {
   font-family: var(--font-family);
 }
 
-.navbar-logo img {
-  height: 40px;
+.navbar-logo {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 
 .navbar-links {
@@ -42,6 +49,12 @@ export default {
 }
 
 .navbar-links a:hover {
+  text-decoration: underline;
+}
+
+/* Add styles for router-link */
+.navbar-links .router-link-active {
+  font-weight: bold;
   text-decoration: underline;
 }
 </style>

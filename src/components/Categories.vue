@@ -4,22 +4,28 @@
     <p v-if="loading">Chargement des catégories...</p>
     <p v-if="error">{{ error }}</p>
     <div v-else>
-      <button
+      <Button
         v-for="category in activeCategories"
         :key="category.id"
+        size="small"
+        customClass="secondary"
         @click="selectCategory(category)"
       >
         {{ category.title }} ({{ category.questions_count }} questions)
-      </button>
+      </Button>
     </div>
   </div>
 </template>
 
 <script>
 import { api } from "@/services/api.js";
+import Button from "@/components/Button.vue";
 
 export default {
   name: "Categories",
+  components: {
+    Button,
+  },
   data() {
     return {
       categories: [],
@@ -37,15 +43,6 @@ export default {
     this.fetchCategories();
   },
   methods: {
-    async getCategories() {
-      try {
-        const response = await axios.get(`${API_BASE_URL}/categories`);
-        return response.data;
-      } catch (error) {
-        console.error("Erreur dans getCategories:", error);
-        throw error;
-      }
-    },
     async fetchCategories() {
       this.loading = true;
       try {
@@ -65,3 +62,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+button {
+  margin: 0.5rem;
+}
+</style>

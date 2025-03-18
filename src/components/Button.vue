@@ -58,7 +58,7 @@ export default {
 }
 
 .btn.secondary {
-  background-color: var(--secondary-color);
+  background-color: var(--dark-green);
   color: var(--white);
 }
 

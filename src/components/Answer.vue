@@ -9,19 +9,19 @@
       {{ answer }}
     </div>
     <!-- Use the Btn component for the "Next Question" button -->
-    <Button size="medium" customClass="primary" @click="nextQuestion">
+    <Button size="small" customClass="secondary" @click="nextQuestion">
       Question Suivante
     </Button>
   </div>
 </template>
 
 <script>
-import Button from "./Button.vue"; // Import the Btn component
+import Button from "./Button.vue";
 
 export default {
   name: "Answer",
   components: {
-    Button, // Register the Btn component
+    Button,
   },
   props: {
     answers: {

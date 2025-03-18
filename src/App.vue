@@ -1,24 +1,26 @@
 <template>
   <div id="app">
-    <NavbarComponent />
+    <Navbar />
     <router-view />
   </div>
 </template>
-
+r
 <script>
-import NavbarComponent from "../src/components/Navbar.vue";
+import Navbar from "./components/Navbar.vue";
 import Answer from "./components/Answer.vue";
+import Button from "./components/Button.vue";
 import "./assets/main.css";
 
 export default {
   name: "App",
 
-  data() {},
-
   components: {
-    NavbarComponent,
+    Navbar,
     Answer,
+    Button,
   },
+
+  data() {},
 };
 </script>
 

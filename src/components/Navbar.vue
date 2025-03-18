@@ -5,9 +5,6 @@
       <li>
         <router-link to="/">Accueil</router-link>
       </li>
-      <li>
-        <router-link to="/categories">Catégories</router-link>
-      </li>
     </ul>
   </nav>
 </template>

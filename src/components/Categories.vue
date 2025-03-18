@@ -4,11 +4,7 @@
     <p v-if="loading">Chargement des catégories...</p>
     <p v-if="error">{{ error }}</p>
     <div v-else>
-      <router-link
-        v-for="category in activeCategories"
-        :key="category.id"
-        :to="`/quizz/${category.id}`"
-      >
+      <router-link v-for="category in activeCategories" :key="category.id" :to="`/quizz/${category.id}`">
         <Button size="small" customClass="secondary">
           {{ category.title }} ({{ category.questions_count }} questions)
         </Button>

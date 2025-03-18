@@ -20,7 +20,11 @@ export default {
     Button,
   },
 
-  data() {},
+  data() {
+    return {
+      name: 'MusicQuizz',
+    }
+  },
 };
 </script>
 

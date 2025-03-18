@@ -12,4 +12,19 @@ export const api = {
       throw error;
     }
   },
+
+  async getCategoryData(categoryId) {
+    try {
+      const response = await axios.get(
+        `${API_BASE_URL}/categories/${categoryId}`
+      );
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Erreur lors de la récupération des données de la catégorie:",
+        error
+      );
+      throw error;
+    }
+  },
 };

@@ -4,15 +4,15 @@
     <p v-if="loading">Chargement des catégories...</p>
     <p v-if="error">{{ error }}</p>
     <div v-else>
-      <Button
+      <router-link
         v-for="category in activeCategories"
         :key="category.id"
-        size="small"
-        customClass="secondary"
-        @click="selectCategory(category)"
+        :to="`/quizz/${category.id}`"
       >
-        {{ category.title }} ({{ category.questions_count }} questions)
-      </Button>
+        <Button size="small" customClass="secondary">
+          {{ category.title }} ({{ category.questions_count }} questions)
+        </Button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -39,7 +39,6 @@ export default {
     },
   },
   async created() {
-    console.log("Categories component created");
     this.fetchCategories();
   },
   methods: {
@@ -50,20 +49,20 @@ export default {
         console.log("Catégories reçues:", result);
         this.categories = result;
       } catch (error) {
-        console.error("Erreur détaillée:", error);
         this.error = "Impossible de charger les catégories.";
       } finally {
         this.loading = false;
       }
-    },
-    selectCategory(category) {
-      this.$emit("categorySelected", category.id);
     },
   },
 };
 </script>
 
 <style scoped>
+router-link {
+  text-decoration: none;
+}
+
 button {
   margin: 0.5rem;
 }

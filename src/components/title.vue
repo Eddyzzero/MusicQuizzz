@@ -1,85 +1,61 @@
 <template>
   <div>
-    <h1>{{ title }}</h1>
-    <select v-model="categoryId" @change="changeCategory(categoryId)">
-      <option
-        v-for="category in categories"
-        :key="category.id"
-        :value="category.id"
-      >
-        {{ category.title }}
-      </option>
-    </select>
-    <!-- Afficher les détails de la question -->
-    <div v-if="currentQuestion">
-      <h2>{{ currentQuestion.title }}</h2>
+    <h1 v-if="categoryTitle">{{ categoryTitle }}</h1>
+
+    <div v-if="questions.length > 0">
+      <h2>Questions :</h2>
+      <ul>
+        <li v-for="question in questions" :key="question.id">
+          {{ question.title }}
+        </li>
+      </ul>
     </div>
+
+    <p v-else>Chargement des questions...</p>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import { api } from "@/services/api";
 
 export default {
   name: "TitleComponent",
   data() {
     return {
-      title: "Quizz Musical",
-      questionsId: [],
-      randomTitle: [],
-      categoryId: 1,
-      currentQuestion: null,
-      categories: [],
+      categoryTitle: null,
+      questions: [],
     };
   },
-
-  async mounted() {
-    // Chargement des questions et des catégories
-    // On charge les questions d'abord pour avoir les id des questions
-    await this.loadQuestions();
-    // On charge les catégories pour avoir les titres des catégories
-    await this.loadCategories();
-  },
-
-  methods: {
-    // Chargement des catégories
-    // On récupère les catégories depuis l'API
-    async loadCategories() {
-      try {
-        const response = await axios.get(
-          "https://quizz-musical-backend.airdev.be/api/categories"
-        );
-        this.categories = response.data;
-      } catch (error) {
-        console.error("Erreur lors du chargement des catégories:", error);
-      }
-    },
-
-    // Chargement des questions
-    // On récupère les questions d'une catégorie depuis l'API
-    async loadQuestions() {
-      try {
-        // Utiliser l'URL correcte pour récupérer les questions d'une catégorie
-        const response = await axios.get(
-          `https://quizz-musical-backend.airdev.be/api/categories/${this.categoryId}`
-        );
-        // Les questions sont dans response.data.questions
-        const questions = response.data.questions;
-
-        if (questions && questions.length > 0) {
-          const randomIndex = Math.floor(Math.random() * questions.length);
-          this.currentQuestion = questions[randomIndex];
+  watch: {
+    "$route.params.id": {
+      immediate: true,
+      async handler(newCategoryId) {
+        if (newCategoryId) {
+          await this.fetchCategoryData(newCategoryId);
         }
-      } catch (error) {
-        console.error("Erreur:", error);
-      }
+      },
     },
+  },
+  methods: {
+    async fetchCategoryData(categoryId) {
+      try {
+        console.log(
+          "Récupération des données pour la catégorie ID :",
+          categoryId
+        );
 
-    // Changement de catégorie
-    // On change la catégorie et on recharge les questions
-    async changeCategory(newCategoryId) {
-      this.categoryId = newCategoryId;
-      await this.loadQuestions();
+        const categoryData = await api.getCategoryData(categoryId);
+
+        console.log("📌 Données reçues de l'API :", categoryData);
+
+        this.categoryTitle = categoryData.title;
+        this.questions = categoryData.questions;
+      } catch (error) {
+        console.error(
+          "Erreur lors du chargement des données de la catégorie :",
+          error
+        );
+      }
     },
   },
 };

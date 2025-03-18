@@ -43,7 +43,7 @@ export default {
 <style scoped>
 .answer-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 1rem;
   margin-top: 2rem;
 }

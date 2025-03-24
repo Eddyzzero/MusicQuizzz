@@ -1,31 +1,65 @@
 <template>
-  <header>
-    <TitleComponent />
-  </header>
-  <section>
-    <Answer />
-  </section>
+  <div v-if="categoryData">
+    <!--<header>
+      <TitleComponent :categoryTitle="categoryData.title" />
+    </header>-->
+
+    <section>
+      <!-- Affiche QuizLyrics seulement si c’est la bonne catégorie -->
+      <QuizLyrics
+        v-if="categoryData.title === 'Paroles de chansons'"
+        :questions="filteredQuestions"
+      />
+      <!-- 
+    <QuizBlindTest
+      v-else-if="categoryData.title === 'Blind test'"
+      :questions="filteredQuestions"
+    />
+    --></section>
+  </div>
+  <p v-else>Chargement...</p>
 </template>
 
 <script>
-import Answer from "@/components/Answer.vue";
-import TitleComponent from "../components/title.vue";
-import { types } from "sass";
+import QuizLyrics from "@/components/QuizLyrics.vue";
+import { api } from "@/services/api";
+import TitleComponent from "@/components/title.vue";
 
 export default {
   name: "QuizzView",
-
-  props: {
-    id: {
-      types: String,
-      required: true
-    }
-  },
-
   components: {
+    QuizLyrics,
     TitleComponent,
-    Answer,
+  },
+  data() {
+    return {
+      categoryData: null,
+    };
+  },
+  computed: {
+    filteredQuestions() {
+      if (!this.categoryData || !this.categoryData.questions) return [];
+      return this.categoryData.questions.filter((q) => q.is_active === 1);
+    },
+  },
+  watch: {
+    "$route.params.id": {
+      immediate: true,
+      async handler(newId) {
+        if (newId) {
+          try {
+            const data = await api.getCategoryData(newId);
+            this.categoryData = data;
+          } catch (error) {
+            console.error("Erreur lors du chargement des données :", error);
+          }
+        }
+      },
+    },
   },
 };
 </script>
-<style></style>
+
+<style scoped>
+/* Ajoute du style ici si besoin */
+</style>

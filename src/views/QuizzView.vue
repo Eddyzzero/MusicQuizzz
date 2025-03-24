@@ -10,7 +10,6 @@
 <script>
 import Answer from "@/components/Answer.vue";
 import TitleComponent from "../components/title.vue";
-import { types } from "sass";
 
 export default {
   name: "QuizzView",

@@ -10,7 +10,6 @@
         </li>
       </ul>
     </div>
-
     <p v-else>Chargement des questions...</p>
   </div>
 </template>
@@ -39,14 +38,9 @@ export default {
   methods: {
     async fetchCategoryData(categoryId) {
       try {
-        console.log(
-          "Récupération des données pour la catégorie ID :",
-          categoryId
-        );
 
         const categoryData = await api.getCategoryData(categoryId);
 
-        console.log("📌 Données reçues de l'API :", categoryData);
 
         this.categoryTitle = categoryData.title;
         this.questions = categoryData.questions;

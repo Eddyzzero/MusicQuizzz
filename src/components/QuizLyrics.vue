@@ -13,6 +13,7 @@
         {{ currentQuestion.content.song_title }}
       </p>
       <p><strong>Auteur :</strong> {{ currentQuestion.content.song_author }}</p>
+      <p><strong>Points :</strong> {{ currentQuestion.points }}</p>
 
       <input
         type="text"
@@ -20,19 +21,22 @@
         placeholder="Votre réponse..."
         @keyup.enter="checkAnswer"
       />
-      <button @click="checkAnswer">Valider</button>
+      <Button @click="checkAnswer" size="small" customClass="secondary">
+        Valider
+      </Button>
 
       <p v-if="feedback" :class="{ correct: isCorrect, incorrect: !isCorrect }">
         {{ feedback }}
       </p>
 
-      <button
+      <Button
         v-if="showNextButton"
         @click="nextQuestion"
-        class="btn small secondary"
+        size="large"
+        customClass="secondary"
       >
         Question suivante
-      </button>
+      </Button>
     </div>
   </div>
   <p v-else>Aucune question disponible.</p>
@@ -93,4 +97,82 @@ export default {
   },
 };
 </script>
-<style></style>
+<style scoped>
+.question-block {
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 700px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.question-block h3 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.lyrics {
+  font-style: italic;
+  background-color: #eef3f7;
+  padding: 1rem;
+  border-left: 4px solid #42b983;
+  margin: 1rem 0;
+  white-space: pre-line;
+  border-radius: 8px;
+}
+
+.question-block p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-top: 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+  border-color: #42b983;
+  outline: none;
+}
+
+button,
+.btn {
+  margin-top: 1rem;
+}
+
+.correct {
+  color: green;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.incorrect {
+  color: red;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .question-block {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+
+  .question-block h3 {
+    font-size: 1.25rem;
+  }
+
+  input[type="text"] {
+    font-size: 0.95rem;
+  }
+}
+</style>

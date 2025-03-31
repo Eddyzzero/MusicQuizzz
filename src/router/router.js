@@ -5,6 +5,8 @@ import HomeView from "@/views/HomeView.vue";
 import QuizView from "@/views/QuizzView.vue";
 import ResultView from "@/views/ResultView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
+import QuizBlindTest from "@/components/QuizBlindTest.vue";
+import Timer from "@/components/Timer.vue";
 
 const routes = [
   {
@@ -24,9 +26,20 @@ const routes = [
     component: ResultView,
   },
   {
+    path: "/blind-test/:id",
+    name: "BlindTest",
+    component: QuizBlindTest,
+    props: true,
+  },
+  {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
     component: NotFoundView,
+  },
+  {
+    path: "/timer",
+    name: "Timer",
+    component: Timer,
   },
 ];
 

@@ -6,29 +6,22 @@
 
     <section>
       <!-- Affiche QuizLyrics seulement si c’est la bonne catégorie -->
-      <QuizLyrics
-        v-if="categoryData.title === 'Paroles de chansons'"
-        :questions="filteredQuestions"
-      />
+      <QuizLyrics v-if="categoryData.title === 'Paroles de chansons'" :questions="filteredQuestions" />
       <!-- 
     <QuizBlindTest
       v-else-if="categoryData.title === 'Blind test'"
       :questions="filteredQuestions"
     />
-    --></section>
+    -->
+    </section>
   </div>
   <p v-else>Chargement...</p>
 </template>
 
 <script>
-<<<<<<< HEAD
 import QuizLyrics from "@/components/QuizLyrics.vue";
 import { api } from "@/services/api";
 import TitleComponent from "@/components/title.vue";
-=======
-import Answer from "@/components/Answer.vue";
-import TitleComponent from "../components/title.vue";
->>>>>>> feature/QuizLyrics
 
 export default {
   name: "QuizzView",
@@ -65,6 +58,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* Ajoute du style ici si besoin */
-</style>
+<style scoped></style>

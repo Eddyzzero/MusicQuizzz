@@ -4,18 +4,13 @@
         <div v-else-if="error">{{ error }}</div>
         <div v-else-if="category" class="quiz-content">
             <h1>{{ category.title }}</h1>
-            <div v-for="question in category.questions" :key="question.id" class="question-container">
+            <div v-for="(question, index) in category.questions" :key="question.id" class="question-container"
+                v-show="currentQuestionIndex === index">
                 <h3>{{ question.title }}</h3>
                 <div class="audio-container" v-if="question.content.sound_url">
                     <audio controls>
                         <source :src="question.content.sound_url" type="audio/mpeg">
                     </audio>
-                    <p class="song-info" v-if="question.content.song_title">
-                        Titre: {{ question.content.song_title }}
-                        <span v-if="question.content.song_author">
-                            - Artiste: {{ question.content.song_author }}
-                        </span>
-                    </p>
                 </div>
                 <div class="answers-container">
                     <button v-for="answer in question.content.answers" :key="answer"
@@ -24,7 +19,12 @@
                     </button>
                 </div>
                 <div class="points">Points: {{ question.points }}</div>
+                <button v-if="currentQuestionIndex < category.questions.length - 1" @click="nextQuestion"
+                    class="next-button">
+                    Question suivante
+                </button>
             </div>
+            <div class="total-score">Score total: {{ currentScore }}</div>
         </div>
     </div>
 </template>
@@ -46,7 +46,8 @@ export default {
             loading: false,
             error: null,
             currentScore: 0,
-            answeredQuestions: new Set()
+            answeredQuestions: new Set(),
+            currentQuestionIndex: 0
         }
     },
 
@@ -84,6 +85,12 @@ export default {
                 alert(`Correct! +${question.points} points\nScore total: ${this.currentScore}`)
             } else {
                 alert('Incorrect! Essayez encore')
+            }
+        },
+
+        nextQuestion() {
+            if (this.currentQuestionIndex < this.category.questions.length - 1) {
+                this.currentQuestionIndex++
             }
         }
     }
@@ -138,5 +145,29 @@ export default {
     margin-top: 0.5rem;
     font-style: italic;
     color: var(--dark-grey);
+}
+
+.next-button {
+    margin-top: 1rem;
+    padding: 0.8rem 1.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+}
+
+.next-button:hover {
+    opacity: 0.9;
+}
+
+.total-score {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 2rem;
+    color: var(--primary-color);
 }
 </style>

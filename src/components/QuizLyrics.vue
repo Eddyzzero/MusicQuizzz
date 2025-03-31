@@ -43,6 +43,7 @@
       >
         Question suivante
       </Button>
+      <div>Score actuel : {{ currentScore }} pts</div>
     </div>
   </div>
   <p v-else>Aucune question disponible.</p>
@@ -68,6 +69,8 @@ export default {
       isCorrect: false,
       showNextButton: false,
       isTimeUp: false,
+      currentScore: 0,
+      answeredQuestions: new Set(),
     };
   },
   computed: {
@@ -80,13 +83,21 @@ export default {
       return lyrics.replace(/<br\s*\/?>/gi, "<br>");
     },
     checkAnswer() {
+      if (this.answeredQuestions.has(this.currentQuestion.id)) return;
+
       const user = this.userAnswer.trim().toLowerCase();
       const correct = this.currentQuestion.answer.trim().toLowerCase();
       this.isCorrect = user === correct;
-      this.feedback = this.isCorrect
-        ? "Bonne réponse !"
-        : `Mauvaise réponse. La bonne réponse était : "${this.currentQuestion.answer}"`;
+
+      if (this.isCorrect) {
+        this.currentScore += this.currentQuestion.points;
+        this.feedback = `Bonne réponse ! +${this.currentQuestion.points} pts`;
+      } else {
+        this.feedback = `Mauvaise réponse. La bonne réponse était : "${this.currentQuestion.answer}"`;
+      }
+
       this.showNextButton = true;
+      this.answeredQuestions.add(this.currentQuestion.id);
     },
     nextQuestion() {
       if (this.currentIndex < this.questions.length - 1) {
@@ -111,6 +122,7 @@ export default {
         this.showNextButton = true;
         this.isCorrect = false;
         this.isTimeUp = true;
+        this.answeredQuestions.add(this.currentQuestion.id);
       } else {
         this.nextQuestion();
       }

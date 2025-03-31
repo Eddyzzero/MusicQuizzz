@@ -5,43 +5,54 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed, onMounted, watch } from "vue";
-
-const props = defineProps({
-  duration: { type: Number, default: 15 }, // Default timer set to 15 seconds
-});
-
-const timeLeft = ref(props.duration);
-const emit = defineEmits(["timer-end"]);
-
-const progressWidth = computed(
-  () => `${(timeLeft.value / props.duration) * 100}%`
-);
-
-let timer;
-
-const startTimer = () => {
-  timer = setInterval(() => {
-    if (timeLeft.value > 0) {
-      timeLeft.value--;
-    } else {
-      clearInterval(timer);
-      emit("timer-end");
-    }
-  }, 1000);
+<script>
+export default {
+  props: {
+    duration: {
+      type: Number,
+      default: 20, // Default timer set to 15 seconds
+    },
+  },
+  data() {
+    return {
+      timeLeft: this.duration,
+      timer: null,
+    };
+  },
+  computed: {
+    progressWidth() {
+      return `${(this.timeLeft / this.duration) * 100}%`;
+    },
+  },
+  methods: {
+    startTimer() {
+      this.timer = setInterval(() => {
+        if (this.timeLeft > 0) {
+          this.timeLeft--;
+        } else {
+          clearInterval(this.timer);
+          this.$emit("timer-end");
+        }
+      }, 1000);
+    },
+    resetTimer(newDuration) {
+      this.timeLeft = newDuration;
+      clearInterval(this.timer);
+      this.startTimer();
+    },
+  },
+  watch: {
+    duration(newDuration) {
+      this.resetTimer(newDuration);
+    },
+  },
+  mounted() {
+    this.startTimer();
+  },
+  beforeDestroy() {
+    clearInterval(this.timer); // ✅ Clears timer when component is destroyed
+  },
 };
-
-onMounted(startTimer);
-
-watch(
-  () => props.duration,
-  (newDuration) => {
-    timeLeft.value = newDuration;
-    clearInterval(timer);
-    startTimer();
-  }
-);
 </script>
 
 <style lang="scss" scoped>

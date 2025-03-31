@@ -103,6 +103,7 @@ export default {
       this.feedback = "";
       this.isCorrect = false;
       this.showNextButton = false;
+      this.isTimeUp = false;
     },
     nextQuestionAuto() {
       if (!this.showNextButton) {

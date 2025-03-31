@@ -13,7 +13,7 @@ const props = defineProps({
 });
 
 const timeLeft = ref(props.duration);
-const emit = defineEmits(["time-up"]);
+const emit = defineEmits(["timer-end"]);
 
 const progressWidth = computed(
   () => `${(timeLeft.value / props.duration) * 100}%`
@@ -27,7 +27,7 @@ const startTimer = () => {
       timeLeft.value--;
     } else {
       clearInterval(timer);
-      emit("time-up");
+      emit("timer-end");
     }
   }, 1000);
 };

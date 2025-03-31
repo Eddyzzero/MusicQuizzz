@@ -3,6 +3,7 @@
         <div v-if="loading">Chargement...</div>
         <div v-else-if="error">{{ error }}</div>
         <div v-else-if="category" class="quiz-content">
+            <Timer :duration="category.duration" @timer-end="handleTimeEnd" :key="currentQuestionIndex" />
             <h1>{{ category.title }}</h1>
             <div v-for="(question, index) in category.questions" :key="question.id" class="question-container"
                 v-show="currentQuestionIndex === index">
@@ -14,26 +15,51 @@
                 </div>
                 <div class="answers-container">
                     <button v-for="answer in question.content.answers" :key="answer"
-                        @click="checkAnswer(question, answer)" class="answer-button">
+                        @click="checkAnswer(question, answer)" :disabled="currentQuestionAnswered" :class="{
+                            'answer-button': true,
+                            'disabled': currentQuestionAnswered,
+                            'correct': currentQuestionAnswered && answer.toLowerCase() === question.answer.toLowerCase(),
+                            'incorrect': currentQuestionAnswered && selectedAnswer === answer && !currentQuestionCorrect
+                        }">
                         {{ answer }}
                     </button>
                 </div>
                 <div class="points">Points: {{ question.points }}</div>
-                <button v-if="currentQuestionIndex < category.questions.length - 1" @click="nextQuestion"
-                    class="next-button">
-                    Question suivante
-                </button>
+                <div v-if="!isTimeUp">
+                    <div v-if="currentQuestionAnswered && !currentQuestionCorrect" class="error-message">
+                        incorrect !
+                    </div>
+                    <button v-if="currentQuestionAnswered && currentQuestionIndex < category.questions.length - 1"
+                        @click="nextQuestion" class="next-button">
+                        Question suivante
+                    </button>
+                </div>
+                <div v-if="questionTimeUp" class="error-message">
+                    Temps écoulé pour cette question !
+                </div>
             </div>
             <div class="total-score">Score total: {{ currentScore }}</div>
+            <div class="time-over-overlay" v-if="isTimeUp">
+                <div class="time-over-content">
+                    <h2>Temps écoulé !</h2>
+                    <p>Score final: {{ currentScore }}</p>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import { api } from '@/services/api'
+import Timer from './Timer.vue'
 
 export default {
     name: 'QuizBlindTest',
+
+    components: {
+        Timer,
+    },
+
     props: {
         id: {
             type: String,
@@ -47,7 +73,13 @@ export default {
             error: null,
             currentScore: 0,
             answeredQuestions: new Set(),
-            currentQuestionIndex: 0
+            currentQuestionIndex: 0,
+            showNextButton: false,
+            currentQuestionAnswered: false,
+            currentQuestionCorrect: false,
+            isTimeUp: false,
+            selectedAnswer: null,
+            questionTimeUp: false,
         }
     },
 
@@ -73,25 +105,50 @@ export default {
 
         // Check if the selected answer is correct
         checkAnswer(question, selectedAnswer) {
-            if (this.answeredQuestions.has(question.id)) {
-                alert('Vous avez déjà répondu à cette question!')
+            if (this.answeredQuestions.has(question.id) || this.questionTimeUp) {
                 return
             }
 
+            this.selectedAnswer = selectedAnswer
+            this.currentQuestionAnswered = true
             const isCorrect = selectedAnswer.toLowerCase() === question.answer.toLowerCase()
+            this.currentQuestionCorrect = isCorrect
+
             if (isCorrect) {
                 this.currentScore += question.points
                 this.answeredQuestions.add(question.id)
-                alert(`Correct! +${question.points} points\nScore total: ${this.currentScore}`)
-            } else {
-                alert('Incorrect! Essayez encore')
             }
+
+            // Passer automatiquement à la question suivante après 2 secondes
+            setTimeout(() => {
+                if (this.currentQuestionIndex < this.category.questions.length - 1) {
+                    this.nextQuestion()
+                }
+            }, 2000)
         },
 
         nextQuestion() {
             if (this.currentQuestionIndex < this.category.questions.length - 1) {
                 this.currentQuestionIndex++
+                this.currentQuestionAnswered = false
+                this.currentQuestionCorrect = false
+                this.selectedAnswer = null
+                this.questionTimeUp = false
             }
+        },
+
+        handleTimeEnd() {
+            this.questionTimeUp = true;
+            this.currentQuestionAnswered = true;
+
+            // Attendre 2 secondes avant de passer à la question suivante
+            setTimeout(() => {
+                if (this.currentQuestionIndex < this.category.questions.length - 1) {
+                    this.nextQuestion();
+                } else {
+                    this.isTimeUp = true;
+                }
+            }, 3000);
         }
     }
 }
@@ -136,6 +193,23 @@ export default {
     color: white;
 }
 
+.answer-button.disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.answer-button.correct {
+    background-color: #4CAF50;
+    color: white;
+    border-color: #4CAF50;
+}
+
+.answer-button.incorrect {
+    background-color: #f44336;
+    color: white;
+    border-color: #f44336;
+}
+
 .points {
     font-weight: bold;
     color: var(--primary-color);
@@ -169,5 +243,52 @@ export default {
     font-weight: bold;
     margin-top: 2rem;
     color: var(--primary-color);
+}
+
+.error-message {
+    color: red;
+    margin: 1rem 0;
+    text-align: center;
+    font-weight: bold;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.time-over-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.time-over-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.time-over-content h2 {
+    color: #f44336;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 </style>

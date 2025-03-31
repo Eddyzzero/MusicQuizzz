@@ -3,8 +3,13 @@
 :root {
     --primary-color: #27667B;
     --secondary-color: #B143D60;
+<<<<<<< HEAD
     --dark-green: #80b54a;
     --light-green: #A0C878;
+=======
+    --dark-green: #A0C878;
+    --light-green: #DDEB9D;
+>>>>>>> feature/Timer
 
     --dark-grey: #333;
     --light-grey: #999;

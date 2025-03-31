@@ -1,6 +1,9 @@
 <template>
   <div class="timer">
-    <div class="progress-bar" :style="{ width: progressWidth }"></div>
+    <div
+      class="progress-bar"
+      :style="{ width: progressWidth, backgroundColor: progressColor }"
+    ></div>
     <p class="countdown">{{ timeLeft }}s</p>
   </div>
 </template>
@@ -22,6 +25,13 @@ export default {
   computed: {
     progressWidth() {
       return `${(this.timeLeft / this.duration) * 100}%`;
+    },
+    progressColor() {
+      // Interpolate color from green to red
+      const percent = this.timeLeft / this.duration;
+      const red = Math.round(255 * (1 - percent));
+      const green = Math.round(255 * percent);
+      return `rgb(${red}, ${green}, 0)`;
     },
   },
   methods: {
@@ -50,7 +60,7 @@ export default {
     this.startTimer();
   },
   beforeDestroy() {
-    clearInterval(this.timer); // ✅ Clears timer when component is destroyed
+    clearInterval(this.timer);
   },
 };
 </script>
@@ -70,8 +80,7 @@ export default {
 
 .progress-bar {
   height: 100%;
-  background: #ff4d4d;
-  transition: width 1s linear;
+  transition: width 1s linear, background-color 1s linear;
 }
 
 .countdown {

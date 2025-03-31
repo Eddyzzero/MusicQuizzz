@@ -12,7 +12,7 @@ export default {
   components: {
     Categories,
   },
-  created() {},
+  created() { },
   methods: {
     startQuiz(category) {
       this.$router.push(`/quizz/${category.id}`);

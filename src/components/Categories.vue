@@ -4,7 +4,7 @@
     <p v-if="loading">Chargement des catégories...</p>
     <p v-if="error">{{ error }}</p>
     <div v-else>
-      <router-link v-for="category in activeCategories" :key="category.id" :to="`/quizz/${category.id}`">
+      <router-link v-for="category in activeCategories" :key="category.id" :to="getRouteForCategory(category)">
         <Button size="small" customClass="secondary">
           {{ category.title }} ({{ category.questions_count }} questions)
         </Button>
@@ -50,6 +50,11 @@ export default {
         this.loading = false;
       }
     },
+    getRouteForCategory(category) {
+      return category.title === "Blind test"
+        ? `/blind-test/${category.id}`
+        : `/quizz/${category.id}`;
+    }
   },
 };
 </script>

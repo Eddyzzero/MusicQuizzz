@@ -21,9 +21,14 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 import QuizLyrics from "@/components/QuizLyrics.vue";
 import { api } from "@/services/api";
 import TitleComponent from "@/components/title.vue";
+=======
+import Answer from "@/components/Answer.vue";
+import TitleComponent from "../components/title.vue";
+>>>>>>> feature/QuizLyrics
 
 export default {
   name: "QuizzView",

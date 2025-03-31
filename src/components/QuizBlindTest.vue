@@ -41,10 +41,14 @@
                 </div>
             </div>
             <div class="total-score">Score total: {{ currentScore }}</div>
-            <div class="time-over-overlay" v-if="isTimeUp">
+            <div class="time-over-overlay flex-col" v-if="isTimeUp">
                 <div class="time-over-content">
                     <h2>Temps écoulé !</h2>
                     <p>Score final: {{ currentScore }}</p>
+                </div>
+                <div>
+                    <button @click="$router.push('/')" class="next-button">Retour à l'accueil</button>
+                    <button @click="restartQuiz" class="next-button">Rejouer</button>
                 </div>
             </div>
         </div>
@@ -144,6 +148,17 @@ export default {
                     this.isTimeUp = true;
                 }
             }, 3000);
+        },
+
+        restartQuiz() {
+            this.currentScore = 0
+            this.answeredQuestions.clear()
+            this.currentQuestionIndex = 0
+            this.currentQuestionAnswered = false
+            this.currentQuestionCorrect = false
+            this.selectedAnswer = null
+            this.isTimeUp = false
+            this.questionTimeUp = false
         }
     }
 }
@@ -154,6 +169,11 @@ export default {
     padding: 2rem;
     max-width: 800px;
     margin: 0 auto;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
 }
 
 .question-container {

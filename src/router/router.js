@@ -6,12 +6,7 @@ import QuizView from "@/views/QuizzView.vue";
 import ResultView from "@/views/ResultView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
 import QuizBlindTest from "@/components/QuizBlindTest.vue";
-import Timer from "@/components/Timer.vue";
-<<<<<<< HEAD
-=======
-import Answer from "@/components/Answer.vue";
 import Result from "@/components/Result.vue";
->>>>>>> feature/Result
 
 const routes = [
   {
@@ -41,24 +36,6 @@ const routes = [
     name: "NotFound",
     component: NotFoundView,
   },
-  {
-    path: "/timer",
-    name: "Timer",
-    component: Timer,
-  },
-<<<<<<< HEAD
-=======
-  {
-    path: "/answer",
-    name: "Answer",
-    component: Answer,
-  },
-  {
-    path: "/result",
-    name: "Result",
-    component: Result,
-  },
->>>>>>> feature/Result
 ];
 
 const router = createRouter({

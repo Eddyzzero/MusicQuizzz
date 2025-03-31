@@ -10,7 +10,7 @@ export default {
   props: {
     duration: {
       type: Number,
-      default: 20, // Default timer set to 15 seconds
+      default: 20,
     },
   },
   data() {

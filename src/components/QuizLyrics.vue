@@ -1,6 +1,7 @@
 <template>
   <div v-if="questions.length > 0">
     <div v-if="currentQuestion" class="question-block">
+      <Timer :key="currentIndex" :duration="10" @time-up="nextQuestionAuto" />
       <h3>{{ currentQuestion.title }}</h3>
 
       <p
@@ -21,7 +22,12 @@
         placeholder="Votre réponse..."
         @keyup.enter="checkAnswer"
       />
-      <Button @click="checkAnswer" size="small" customClass="secondary">
+      <Button
+        @click="checkAnswer"
+        size="small"
+        customClass="secondary"
+        :disabled="isTimeUp || showNextButton"
+      >
         Valider
       </Button>
 
@@ -44,9 +50,11 @@
 
 <script>
 import Button from "@/components/Button.vue";
+import Timer from "@/components/Timer.vue";
 export default {
   components: {
     Button,
+    Timer,
   },
   name: "QuizLyrics",
   props: {
@@ -59,6 +67,7 @@ export default {
       feedback: "",
       isCorrect: false,
       showNextButton: false,
+      isTimeUp: false,
     };
   },
   computed: {
@@ -86,6 +95,7 @@ export default {
       } else {
         this.feedback = "Fin du quiz !";
         this.showNextButton = false;
+        this.isTimeUp = false;
       }
     },
     resetState() {
@@ -93,6 +103,16 @@ export default {
       this.feedback = "";
       this.isCorrect = false;
       this.showNextButton = false;
+    },
+    nextQuestionAuto() {
+      if (!this.showNextButton) {
+        this.feedback = `Temps écoulé ! La bonne réponse était : "${this.currentQuestion.answer}"`;
+        this.showNextButton = true;
+        this.isCorrect = false;
+        this.isTimeUp = true;
+      } else {
+        this.nextQuestion();
+      }
     },
   },
 };

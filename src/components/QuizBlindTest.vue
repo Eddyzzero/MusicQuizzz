@@ -7,6 +7,8 @@
             <h1>{{ category.title }}</h1>
             <div v-for="(question, index) in category.questions" :key="question.id" class="question-container"
                 v-show="currentQuestionIndex === index">
+                <div class="question-number">Question {{ currentQuestionIndex + 1 }} / {{ category.questions.length }}
+                </div>
                 <h3>{{ question.title }}</h3>
                 <div class="audio-container" v-if="question.content.sound_url">
                     <audio controls>
@@ -29,13 +31,13 @@
                     <div v-if="currentQuestionAnswered && !currentQuestionCorrect" class="error-message">
                         incorrect !
                     </div>
+                    <div v-if="questionTimeUp" class="error-message">
+                        Temps écoulé pour cette question !
+                    </div>
                     <button v-if="currentQuestionAnswered && currentQuestionIndex < category.questions.length - 1"
                         @click="nextQuestion" class="next-button">
                         Question suivante
                     </button>
-                </div>
-                <div v-if="questionTimeUp" class="error-message">
-                    Temps écoulé pour cette question !
                 </div>
             </div>
             <div class="total-score">Score total: {{ currentScore }}</div>
@@ -118,13 +120,6 @@ export default {
                 this.currentScore += question.points
                 this.answeredQuestions.add(question.id)
             }
-
-            // Passer automatiquement à la question suivante après 2 secondes
-            setTimeout(() => {
-                if (this.currentQuestionIndex < this.category.questions.length - 1) {
-                    this.nextQuestion()
-                }
-            }, 2000)
         },
 
         nextQuestion() {
@@ -278,6 +273,14 @@ export default {
     color: #f44336;
     font-size: 2rem;
     margin-bottom: 1rem;
+}
+
+.question-number {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-weight: bold;
 }
 
 @keyframes fadeIn {

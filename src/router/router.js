@@ -7,6 +7,8 @@ import ResultView from "@/views/ResultView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
 import QuizBlindTest from "@/components/QuizBlindTest.vue";
 import Timer from "@/components/Timer.vue";
+import Answer from "@/components/Answer.vue";
+import Result from "@/components/Result.vue";
 
 const routes = [
   {
@@ -40,6 +42,16 @@ const routes = [
     path: "/timer",
     name: "Timer",
     component: Timer,
+  },
+  {
+    path: "/answer",
+    name: "Answer",
+    component: Answer,
+  },
+  {
+    path: "/result",
+    name: "Result",
+    component: Result,
   },
 ];
 

@@ -1,14 +1,16 @@
 <template>
   <div v-if="questions.length > 0">
     <div v-if="currentQuestion" class="question-block">
-      <Timer :key="currentIndex" :duration="10" @time-up="nextQuestionAuto" />
-      <h3>{{ currentQuestion.title }}</h3>
+      <Timer :key="currentIndex" :duration="10" @timer-end="handleTimerEnd" />
+      <h3>
+        {{ currentIndex + 1 }} / {{ questions.length }} :
+        {{ currentQuestion.title }}
+      </h3>
 
       <p
         v-html="formatLyrics(currentQuestion.content.lyrics)"
         class="lyrics"
       ></p>
-
       <p>
         <strong>Titre de la chanson :</strong>
         {{ currentQuestion.content.song_title }}
@@ -22,6 +24,7 @@
         placeholder="Votre réponse..."
         @keyup.enter="checkAnswer"
       />
+
       <Button
         @click="checkAnswer"
         size="small"
@@ -37,12 +40,13 @@
 
       <Button
         v-if="showNextButton"
-        @click="nextQuestion"
+        @click="goToNextQuestion"
         size="large"
         customClass="secondary"
       >
         Question suivante
       </Button>
+
       <div>Score actuel : {{ currentScore }} pts</div>
     </div>
   </div>
@@ -52,11 +56,9 @@
 <script>
 import Button from "@/components/Button.vue";
 import Timer from "@/components/Timer.vue";
+
 export default {
-  components: {
-    Button,
-    Timer,
-  },
+  components: { Button, Timer },
   name: "QuizLyrics",
   props: {
     questions: Array,
@@ -71,6 +73,7 @@ export default {
       isTimeUp: false,
       currentScore: 0,
       answeredQuestions: new Set(),
+      nextLocked: false,
     };
   },
   computed: {
@@ -82,6 +85,7 @@ export default {
     formatLyrics(lyrics) {
       return lyrics.replace(/<br\s*\/?>/gi, "<br>");
     },
+
     checkAnswer() {
       if (this.answeredQuestions.has(this.currentQuestion.id)) return;
 
@@ -99,37 +103,46 @@ export default {
       this.showNextButton = true;
       this.answeredQuestions.add(this.currentQuestion.id);
     },
-    nextQuestion() {
-      if (this.currentIndex < this.questions.length - 1) {
-        this.currentIndex++;
-        this.resetState();
-      } else {
-        this.feedback = "Fin du quiz !";
-        this.showNextButton = false;
-        this.isTimeUp = false;
+
+    handleTimerEnd() {
+      if (!this.showNextButton) {
+        this.feedback = `Temps écoulé ! La bonne réponse était : "${this.currentQuestion.answer}"`;
+        this.isCorrect = false;
+        this.isTimeUp = true;
+        this.showNextButton = true;
+        this.answeredQuestions.add(this.currentQuestion.id);
       }
     },
+
+    goToNextQuestion() {
+      if (this.nextLocked) return;
+      this.nextLocked = true;
+
+      if (this.currentIndex < this.questions.length - 1) {
+        this.currentIndex++;
+        setTimeout(() => {
+          this.resetState(); // attend que l'affichage se fasse
+        }, 50);
+      } else {
+        this.$router.push({
+          name: "Result",
+          query: { score: this.currentScore },
+        });
+      }
+    },
+
     resetState() {
       this.userAnswer = "";
       this.feedback = "";
       this.isCorrect = false;
       this.showNextButton = false;
       this.isTimeUp = false;
-    },
-    nextQuestionAuto() {
-      if (!this.showNextButton) {
-        this.feedback = `Temps écoulé ! La bonne réponse était : "${this.currentQuestion.answer}"`;
-        this.showNextButton = true;
-        this.isCorrect = false;
-        this.isTimeUp = true;
-        this.answeredQuestions.add(this.currentQuestion.id);
-      } else {
-        this.nextQuestion();
-      }
+      this.nextLocked = false;
     },
   },
 };
 </script>
+
 <style scoped>
 .question-block {
   background-color: #f8f9fa;

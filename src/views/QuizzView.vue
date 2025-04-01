@@ -6,14 +6,16 @@
 
     <section>
       <!-- Affiche QuizLyrics seulement si c’est la bonne catégorie -->
-      <QuizLyrics v-if="categoryData.title === 'Paroles de chansons'" :questions="filteredQuestions" />
+      <QuizLyrics
+        v-if="categoryData.title === 'Paroles de chansons'"
+        :questions="filteredQuestions"
+      />
       <!-- 
     <QuizBlindTest
       v-else-if="categoryData.title === 'Blind test'"
       :questions="filteredQuestions"
     />
-    -->
-    </section>
+    --></section>
   </div>
   <p v-else>Chargement...</p>
 </template>
@@ -37,7 +39,13 @@ export default {
   computed: {
     filteredQuestions() {
       if (!this.categoryData || !this.categoryData.questions) return [];
-      return this.categoryData.questions.filter((q) => q.is_active === 1);
+
+      const filtered = this.categoryData.questions
+        .filter((q) => q.is_active == 1)
+        .sort((a, b) => a.id - b.id);
+
+      console.log("Questions actives filtrées :", filtered);
+      return filtered;
     },
   },
   watch: {
@@ -48,6 +56,12 @@ export default {
           try {
             const data = await api.getCategoryData(newId);
             this.categoryData = data;
+            console.log("Toutes les questions :", data.questions);
+            console.log(
+              "Question 2 : ",
+              data.questions.find((q) => q.id === 2)
+            );
+            ``;
           } catch (error) {
             console.error("Erreur lors du chargement des données :", error);
           }

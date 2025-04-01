@@ -6,7 +6,6 @@ import QuizView from "@/views/QuizzView.vue";
 import ResultView from "@/views/ResultView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
 import QuizBlindTest from "@/components/QuizBlindTest.vue";
-import Timer from "@/components/Timer.vue";
 
 const routes = [
   {

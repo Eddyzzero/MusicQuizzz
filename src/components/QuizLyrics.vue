@@ -1,54 +1,43 @@
 <template>
-  <div v-if="questions.length > 0">
-    <div v-if="currentQuestion" class="question-block">
+  <div v-if="questions.length > 0" class="quiz-container">
+    <div v-if="currentQuestion" class="question-block flex-row-center">
       <Timer :key="currentIndex" :duration="10" @timer-end="handleTimerEnd" />
-      <h3>
-        {{ currentIndex + 1 }} / {{ questions.length }} :
-        {{ currentQuestion.title }}
-      </h3>
+      <div class="flex-col">
+        <p>
+          {{ currentIndex + 1 }} / {{ questions.length }}
+        </p>
+        <h3> {{ currentQuestion.title }}</h3>
+      </div>
 
-      <p
-        v-html="formatLyrics(currentQuestion.content.lyrics)"
-        class="lyrics"
-      ></p>
+      <p v-html="formatLyrics(currentQuestion.content.lyrics)" class="lyrics flex-row-center"></p>
       <p>
         <strong>Titre de la chanson :</strong>
         {{ currentQuestion.content.song_title }}
       </p>
       <p><strong>Auteur :</strong> {{ currentQuestion.content.song_author }}</p>
-      <p><strong>Points :</strong> {{ currentQuestion.points }}</p>
 
-      <input
-        type="text"
-        v-model="userAnswer"
-        placeholder="Votre réponse..."
-        @keyup.enter="checkAnswer"
-      />
+      <input type="text" v-model="userAnswer" placeholder="Votre réponse..." @keyup.enter="checkAnswer" />
 
-      <Button
-        @click="checkAnswer"
-        size="small"
-        customClass="secondary"
-        :disabled="isTimeUp || showNextButton"
-      >
-        Valider
-      </Button>
+      <div class="flex-row">
+        <Button @click="checkAnswer" size="large" customClass="secondary" :disabled="isTimeUp || showNextButton">
+          Valider
+        </Button>
+      </div>
 
-      <p v-if="feedback" :class="{ correct: isCorrect, incorrect: !isCorrect }">
-        {{ feedback }}
-      </p>
+      <div class="flex-row-center">
+        <p v-if="feedback" :class="{ correct: isCorrect, incorrect: !isCorrect }">
+          {{ feedback }}
+        </p>
 
-      <Button
-        v-if="showNextButton"
-        @click="goToNextQuestion"
-        size="large"
-        customClass="secondary"
-      >
-        Question suivante
-      </Button>
-
-      <div>Score actuel : {{ currentScore }} pts</div>
+        <Button v-if="showNextButton" @click="goToNextQuestion" size="small" customClass="secondary">
+          Question suivante
+        </Button>
+      </div>
+      <div class="flex-row">
+        <p> Points : {{ currentQuestion.points }}</p>
+      </div>
     </div>
+    <div class="total-score">Score actuel : {{ currentScore }} pts</div>
   </div>
   <p v-else>Aucune question disponible.</p>
 </template>
@@ -151,12 +140,47 @@ export default {
   margin: 2rem auto;
   max-width: 700px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
 }
 
 .question-block h3 {
   font-size: 1.5rem;
   color: #2c3e50;
-  margin-bottom: 1rem;
+  margin: 1rem;
+}
+
+.flex-row {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-row-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-row-start {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.total-score {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 2rem;
+  color: var(--primary-color);
 }
 
 .lyrics {

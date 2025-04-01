@@ -1,15 +1,17 @@
 <template>
-    <div class="quiz-blind-test">
+    <div class="quiz-container ">
         <div v-if="loading">Chargement...</div>
         <div v-else-if="error">{{ error }}</div>
-        <div v-else-if="category" class="quiz-content">
+        <div v-else-if="category" class="quiz-content question-block">
             <Timer :duration="category.duration" @timer-end="handleTimeEnd" :key="currentQuestionIndex" />
-            <h1>{{ category.title }}</h1>
             <div v-for="(question, index) in category.questions" :key="question.id" class="question-container"
                 v-show="currentQuestionIndex === index">
-                <div class="question-number">Question {{ currentQuestionIndex + 1 }} / {{ category.questions.length }}
+                <div class="flex-col">
+                    <p class="question-number">Question {{ currentQuestionIndex + 1 }} / {{ category.questions.length
+                        }}
+                    </p>
+                    <h3>{{ question.title }}</h3>
                 </div>
-                <h3>{{ question.title }}</h3>
                 <div class="audio-container" v-if="question.content.sound_url">
                     <audio controls>
                         <source :src="question.content.sound_url" type="audio/mpeg">
@@ -35,35 +37,37 @@
                         Temps écoulé pour cette question !
                     </div>
                     <button v-if="currentQuestionAnswered && currentQuestionIndex < category.questions.length - 1"
-                        @click="nextQuestion" class="next-button">
+                        @click="nextQuestion" size="small" customClass="secondary">
                         Question suivante
                     </button>
                 </div>
             </div>
-            <div class="total-score">Score total: {{ currentScore }}</div>
             <div class="time-over-overlay flex-col" v-if="isTimeUp">
                 <div class="time-over-content">
                     <h2>Temps écoulé !</h2>
                     <p>Score final: {{ currentScore }}</p>
                 </div>
                 <div>
-                    <button @click="$router.push('/')" class="next-button">Retour à l'accueil</button>
+                    <button @click="$router.push('/')" size="small" custom-class="secondary">Retour à l'accueil</button>
                     <button @click="restartQuiz" class="next-button">Rejouer</button>
                 </div>
             </div>
         </div>
+        <div class="total-score">Score total: {{ currentScore }}</div>
     </div>
 </template>
 
 <script>
 import { api } from '@/services/api'
 import Timer from './Timer.vue'
+import Button from './Button.vue'
 
 export default {
     name: 'QuizBlindTest',
 
     components: {
         Timer,
+        Button
     },
 
     props: {
@@ -165,22 +169,11 @@ export default {
 </script>
 
 <style scoped>
-.quiz-blind-test {
-    padding: 2rem;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
 .flex-col {
     display: flex;
     flex-direction: column;
-}
-
-.question-container {
-    margin-bottom: 2rem;
-    padding: 1rem;
-    border: 1px solid var(--light-grey);
-    border-radius: 8px;
+    justify-content: center;
+    align-items: center;
 }
 
 .audio-container {
@@ -189,7 +182,7 @@ export default {
 
 .answers-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 1rem;
     margin: 1rem 0;
 }
@@ -299,8 +292,18 @@ export default {
     text-align: center;
     font-size: 1.2rem;
     color: var(--primary-color);
-    margin-bottom: 1rem;
+    margin: 1rem;
     font-weight: bold;
+}
+
+.question-block {
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 700px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
 }
 
 @keyframes fadeIn {

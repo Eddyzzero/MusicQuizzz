@@ -28,7 +28,7 @@ export default {
 <style scoped>
 .home-container {
   width: 100%;
-  height: 100vh;
+  height: 100vh; /* Full height of the viewport */
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -36,25 +36,26 @@ export default {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .home-title {
   font-size: 2.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   color: #fff;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   font-family: var(--font-family);
   font-weight: 700;
-  position: absolute;
-  top: 62%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   text-transform: uppercase;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    font-size: 2rem;
-  }
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .home-subtitle {
@@ -64,14 +65,20 @@ export default {
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
   font-family: var(--font-family);
   font-weight: 700;
+  max-width: 80%;
   position: absolute;
-  top: 70%;
+  top: 68%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
+}
 
-  @media (max-width: 768px) {
-    width: 100%;
-    font-size: 0.8rem;
+@media (max-width: 768px) {
+  .home-title {
+    font-size: 2rem;
+  }
+
+  .home-subtitle {
+    font-size: 0.9rem;
   }
 }
 </style>

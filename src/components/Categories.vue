@@ -1,18 +1,18 @@
 <template>
-  <div>
+  <div class="categories-container">
     <h2 class="category-title">Choisissez une catégorie</h2>
     <p v-if="loading">Chargement des catégories...</p>
     <p v-if="error">{{ error }}</p>
-    <div v-else>
+    <div v-else class="category-buttons">
       <router-link
         v-for="category in activeCategories"
         :key="category.id"
         :to="getRouteForCategory(category)"
+        class="category-link"
       >
         <div class="category-button">
-          <Button size="small" customClass="secondary">
-            {{ category.title }} ({{ category.questions_count }} questions)
-          </Button>
+          {{ category.title }} <br />
+          ({{ category.questions_count }} questions)
         </div>
       </router-link>
     </div>
@@ -21,13 +21,9 @@
 
 <script>
 import { api } from "@/services/api.js";
-import Button from "@/components/Button.vue";
 
 export default {
   name: "Categories",
-  components: {
-    Button,
-  },
   data() {
     return {
       categories: [],
@@ -66,43 +62,68 @@ export default {
 </script>
 
 <style scoped>
-router-link {
-  text-decoration: none;
-}
-
-.category-button {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid var(--light-grey);
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+.categories-container {
   text-align: center;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    font-size: 0.8rem;
-    flex-direction: column;
-  }
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  justify-content: flex-end;
+  gap: 20px;
 }
 
 .category-title {
   font-size: 1.5rem;
-  margin-bottom: 2rem;
   color: #fff;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   font-family: var(--font-family);
   font-weight: 700;
-  position: absolute;
-  top: 78%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  text-transform: uppercase;
+}
 
-  @media (max-width: 768px) {
-    width: 100%;
-    font-size: 1.2rem;
+.category-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+  padding-bottom: 1vh;
+}
+
+.category-link {
+  text-decoration: none;
+}
+
+.category-button {
+  width: 150px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--light-green);
+  color: #000;
+  border: 2px solid var(--dark-grey);
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-align: center;
+}
+
+.category-button:hover {
+  background-color: var(--primary-color);
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .category-button {
+    width: 120px;
+    height: 120px;
+    font-size: 0.9rem;
   }
 }
 </style>

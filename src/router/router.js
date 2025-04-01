@@ -36,11 +36,6 @@ const routes = [
     name: "NotFound",
     component: NotFoundView,
   },
-  {
-    path: "/timer",
-    name: "Timer",
-    component: Timer,
-  },
 ];
 
 const router = createRouter({

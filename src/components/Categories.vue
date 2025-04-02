@@ -64,13 +64,12 @@ export default {
 <style scoped>
 .categories-container {
   text-align: center;
-  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
-  justify-content: flex-end;
-  gap: 20px;
+  justify-content: center;
+  width: 100%;
+  margin-top: 1rem;
 }
 
 .category-title {
@@ -80,15 +79,17 @@ export default {
   font-family: var(--font-family);
   font-weight: 700;
   text-transform: uppercase;
+  margin-bottom: 1rem;
 }
 
 .category-buttons {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
   justify-content: center;
-  gap: 15px;
+  gap: 1rem;
   width: 100%;
-  padding-bottom: 1vh;
+  max-width: 600px;
 }
 
 .category-link {
@@ -98,13 +99,17 @@ export default {
 .category-button {
   width: 150px;
   height: 100px;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
   background-color: var(--light-green);
-  color: #000;
-  border: 2px solid var(--dark-grey);
+  color: var(--primary-color);
+  border: 5px solid var(--dark-green);
   border-radius: 10px;
+
+  font-family: var(--font-family);
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
@@ -121,8 +126,8 @@ export default {
 /* Responsive styles */
 @media (max-width: 768px) {
   .category-button {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 80px;
     font-size: 0.9rem;
   }
 }

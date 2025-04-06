@@ -4,15 +4,13 @@
     <p v-if="loading">Chargement des catégories...</p>
     <p v-if="error">{{ error }}</p>
     <div v-else class="category-buttons">
-      <router-link
-        v-for="category in activeCategories"
-        :key="category.id"
-        :to="getRouteForCategory(category)"
-        class="category-link"
-      >
+      <router-link v-for="category in activeCategories" :key="category.id" :to="getRouteForCategory(category)"
+        class="category-link">
         <div class="category-button">
-          {{ category.title }} <br />
-          ({{ category.questions_count }} questions)
+          <p>{{ category.title }}</p>
+        </div>
+        <div class="category-n-questions">
+          <p>{{ category.questions_count }} questions</p>
         </div>
       </router-link>
     </div>
@@ -33,7 +31,7 @@ export default {
   },
   computed: {
     activeCategories() {
-      return this.categories.filter((category) => category.is_active === 1);
+      return this.categories.filter((category) => category.is_active === 1 && category.questions_count > 0);
     },
   },
   async created() {
@@ -94,6 +92,10 @@ export default {
 
 .category-link {
   text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
 .category-button {
@@ -101,12 +103,14 @@ export default {
   height: 100px;
 
   display: flex;
+  flex-direction: column;
+  gap: 1rem;
   justify-content: center;
   align-items: center;
 
   background-color: var(--light-green);
-  color: var(--primary-color);
-  border: 5px solid var(--dark-green);
+  color: var(--dark-green);
+  border: 3px solid var(--dark-green);
   border-radius: 10px;
 
   font-family: var(--font-family);
@@ -118,9 +122,21 @@ export default {
 }
 
 .category-button:hover {
-  background-color: var(--primary-color);
+  background-color: var(--dark-green);
   color: white;
   transform: scale(1.05);
+}
+
+.category-n-questions {
+  font-size: 0.8rem;
+  color: var(--dark-grey);
+  font-weight: normal;
+}
+
+.category-n-questions p {
+  margin: 0;
+  color: var(--light-green);
+
 }
 
 /* Responsive styles */

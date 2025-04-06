@@ -6,16 +6,14 @@
 
     <section>
       <!-- Affiche QuizLyrics seulement si c’est la bonne catégorie -->
-      <QuizLyrics
-        v-if="categoryData.title === 'Paroles de chansons'"
-        :questions="filteredQuestions"
-      />
+      <QuizLyrics v-if="categoryData.title === 'Paroles de chansons'" :questions="filteredQuestions" />
       <!-- 
     <QuizBlindTest
       v-else-if="categoryData.title === 'Blind test'"
       :questions="filteredQuestions"
     />
-    --></section>
+    -->
+    </section>
   </div>
   <p v-else>Chargement...</p>
 </template>

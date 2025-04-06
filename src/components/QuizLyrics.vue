@@ -1,20 +1,23 @@
 <template>
   <div v-if="questions.length > 0" class="quiz-container">
-    <div v-if="currentQuestion" class="question-block flex-row-center">
+    <div v-if="currentQuestion" class="question-block flex-row-center question-container">
       <Timer :key="currentIndex" :duration="10" @timer-end="handleTimerEnd" />
       <div class="flex-col">
-        <p>
+        <p class="question-number">
           {{ currentIndex + 1 }} / {{ questions.length }}
         </p>
         <h3> {{ currentQuestion.title }}</h3>
       </div>
 
       <p v-html="formatLyrics(currentQuestion.content.lyrics)" class="lyrics flex-row-center"></p>
-      <p>
-        <strong>Titre de la chanson :</strong>
-        {{ currentQuestion.content.song_title }}
-      </p>
-      <p><strong>Auteur :</strong> {{ currentQuestion.content.song_author }}</p>
+      <div class="flex-row-center">
+        <p>Titre de la chanson : </p>
+        <p class="songAuthor-songTitle">
+          {{ currentQuestion.content.song_title }}
+        </p>
+        <p>Auteur :</p>
+        <p class="songAuthor-songTitle"> {{ currentQuestion.content.song_author }}</p>
+      </div>
 
       <input type="text" v-model="userAnswer" placeholder="Votre réponse..." @keyup.enter="checkAnswer" />
 
@@ -33,11 +36,11 @@
           Question suivante
         </Button>
       </div>
-      <div class="flex-row">
+      <div class="flex-row points">
         <p> Points : {{ currentQuestion.points }}</p>
       </div>
     </div>
-    <div class="total-score">Score actuel : {{ currentScore }} pts</div>
+    <div class="total-score">Score actuel : {{ currentScore }}</div>
   </div>
   <p v-else>Aucune question disponible.</p>
 </template>
@@ -144,15 +147,13 @@ export default {
 }
 
 .question-block h3 {
-  font-size: 1.5rem;
-  color: #2c3e50;
-  margin: 1rem;
+  margin: 1rem 0;
 }
 
 .flex-row {
   display: flex;
-  justify-content: end;
-  align-items: center;
+  justify-content: start;
+  align-items: start;
 }
 
 .flex-col {
@@ -169,6 +170,14 @@ export default {
   align-items: center;
 }
 
+.question-number {
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--primary-color);
+  margin: 1rem;
+  font-weight: bold;
+}
+
 .flex-row-start {
   display: flex;
   justify-content: start;
@@ -180,22 +189,42 @@ export default {
   font-size: 1.5rem;
   font-weight: bold;
   margin-top: 2rem;
-  color: var(--primary-color);
+  color: white;
+}
+
+.points {
+  font-weight: bold;
+  color: var(--dark-green);
+  width: 100%;
+
+}
+
+.songAuthor-songTitle {
+  font-weight: bold;
+  color: var(--dark-green);
+  margin-left: 0.5rem;
 }
 
 .lyrics {
   font-style: italic;
   background-color: #eef3f7;
   padding: 1rem;
-  border-left: 4px solid #42b983;
+  border-left: 4px solid var(--dark-green);
   margin: 1rem 0;
   white-space: pre-line;
   border-radius: 8px;
+  font-size: .8rem;
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 700px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
 
 .question-block p {
   margin: 0.5rem 0;
-  font-size: 1rem;
 }
 
 input[type="text"] {

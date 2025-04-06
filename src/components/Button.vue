@@ -35,6 +35,21 @@ export default {
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s ease;
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  color: var(--white);
+  background-color: var(--dark-green);
+  font-size: 1rem;
+  margin: 0.5rem;
+  width: auto;
+  min-width: 100px;
+  max-width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  user-select: none;
 }
 
 .btn.small {

@@ -1,5 +1,5 @@
 <template>
-    <div class="quiz-container ">
+    <div class="quiz-container">
         <div v-if="loading">Chargement...</div>
         <div v-else-if="error">{{ error }}</div>
         <div v-else-if="category" class="quiz-content question-block">
@@ -8,7 +8,7 @@
                 v-show="currentQuestionIndex === index">
                 <div class="flex-col">
                     <p class="question-number">Question {{ currentQuestionIndex + 1 }} / {{ category.questions.length
-                        }}
+                    }}
                     </p>
                     <h3>{{ question.title }}</h3>
                 </div>
@@ -29,31 +29,21 @@
                     </button>
                 </div>
                 <div class="points">Points: {{ question.points }}</div>
-                <div v-if="!isTimeUp">
+                <div v-if="!isTimeUp" class="flex-col">
                     <div v-if="currentQuestionAnswered && !currentQuestionCorrect" class="error-message">
                         incorrect !
                     </div>
                     <div v-if="questionTimeUp" class="error-message">
                         Temps écoulé pour cette question !
                     </div>
-                    <button v-if="currentQuestionAnswered && currentQuestionIndex < category.questions.length - 1"
+                    <Button v-if="currentQuestionAnswered && currentQuestionIndex < category.questions.length - 1"
                         @click="nextQuestion" size="small" customClass="secondary">
                         Question suivante
-                    </button>
-                </div>
-            </div>
-            <div class="time-over-overlay flex-col" v-if="isTimeUp">
-                <div class="time-over-content">
-                    <h2>Temps écoulé !</h2>
-                    <p>Score final: {{ currentScore }}</p>
-                </div>
-                <div>
-                    <button @click="$router.push('/')" size="small" custom-class="secondary">Retour à l'accueil</button>
-                    <button @click="restartQuiz" class="next-button">Rejouer</button>
+                    </Button>
                 </div>
             </div>
         </div>
-        <div class="total-score">Score total: {{ currentScore }}</div>
+        <div class="total-score">Score actuel : {{ currentScore }}</div>
     </div>
 </template>
 
@@ -113,7 +103,7 @@ export default {
             }
         },
 
-        // Check if the selected answer is correct
+        // verifie si la response est correcte
         checkAnswer(question, selectedAnswer) {
             if (this.answeredQuestions.has(question.id) || this.questionTimeUp) {
                 return
@@ -128,6 +118,15 @@ export default {
                 this.currentScore += question.points
                 this.answeredQuestions.add(question.id)
             }
+
+            // Vérifie si c'est la dernière question
+            if (this.currentQuestionIndex === this.category.questions.length - 1) {
+                // Redirige immédiatement vers la page des résultats
+                this.$router.push({
+                    name: 'Result',
+                    query: { score: this.currentScore }
+                })
+            }
         },
 
         nextQuestion() {
@@ -137,6 +136,11 @@ export default {
                 this.currentQuestionCorrect = false
                 this.selectedAnswer = null
                 this.questionTimeUp = false
+            } else {
+                this.$router.push({
+                    name: 'result',
+                    query: { score: this.currentScore }
+                })
             }
         },
 
@@ -189,7 +193,7 @@ export default {
 
 .answer-button {
     padding: 0.8rem;
-    border: 2px solid var(--primary-color);
+    border: 2px solid var(--dark-green);
     border-radius: 4px;
     background: white;
     cursor: pointer;
@@ -197,7 +201,7 @@ export default {
 }
 
 .answer-button:hover {
-    background: var(--primary-color);
+    background: var(--dark-green);
     color: white;
 }
 
@@ -220,7 +224,7 @@ export default {
 
 .points {
     font-weight: bold;
-    color: var(--primary-color);
+    color: var(--dark-green);
 }
 
 .song-info {
@@ -229,17 +233,6 @@ export default {
     color: var(--dark-grey);
 }
 
-.next-button {
-    margin-top: 1rem;
-    padding: 0.8rem 1.5rem;
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    width: 100%;
-}
 
 .next-button:hover {
     opacity: 0.9;
@@ -250,7 +243,7 @@ export default {
     font-size: 1.5rem;
     font-weight: bold;
     margin-top: 2rem;
-    color: var(--primary-color);
+    color: white
 }
 
 .error-message {

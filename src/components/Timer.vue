@@ -1,9 +1,6 @@
 <template>
   <div class="timer">
-    <div
-      class="progress-bar"
-      :style="{ width: progressWidth, backgroundColor: progressColor }"
-    ></div>
+    <div class="progress-bar" :style="{ width: progressWidth, backgroundColor: progressColor }"></div>
     <p class="countdown">{{ timeLeft }}s</p>
   </div>
 </template>
@@ -65,7 +62,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .timer {
   position: relative;
   width: 100%;

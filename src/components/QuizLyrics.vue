@@ -1,43 +1,69 @@
 <template>
   <div v-if="questions.length > 0" class="quiz-container">
-    <div v-if="currentQuestion" class="question-block flex-row-center question-container">
+    <div
+      v-if="currentQuestion"
+      class="question-block flex-row-center question-container"
+    >
       <Timer :key="currentIndex" :duration="10" @timer-end="handleTimerEnd" />
       <div class="flex-col">
         <p class="question-number">
           {{ currentIndex + 1 }} / {{ questions.length }}
         </p>
-        <h3> {{ currentQuestion.title }}</h3>
+        <h3>{{ currentQuestion.title }}</h3>
       </div>
 
-      <p v-html="formatLyrics(currentQuestion.content.lyrics)" class="lyrics flex-row-center"></p>
+      <p
+        v-html="formatLyrics(currentQuestion.content.lyrics)"
+        class="lyrics flex-row-center"
+      ></p>
       <div class="flex-row-center">
-        <p>Titre de la chanson : </p>
+        <p>Titre de la chanson :</p>
         <p class="songAuthor-songTitle">
           {{ currentQuestion.content.song_title }}
         </p>
         <p>Auteur :</p>
-        <p class="songAuthor-songTitle"> {{ currentQuestion.content.song_author }}</p>
+        <p class="songAuthor-songTitle">
+          {{ currentQuestion.content.song_author }}
+        </p>
       </div>
 
-      <input type="text" v-model="userAnswer" placeholder="Votre réponse..." @keyup.enter="checkAnswer" />
+      <input
+        type="text"
+        v-model="userAnswer"
+        placeholder="Votre réponse..."
+        @keyup.enter="checkAnswer"
+      />
 
       <div class="flex-row">
-        <Button @click="checkAnswer" size="large" customClass="secondary" :disabled="isTimeUp || showNextButton">
+        <Button
+          @click="checkAnswer"
+          size="large"
+          customClass="secondary"
+          :disabled="isTimeUp || showNextButton"
+        >
           Valider
         </Button>
       </div>
 
       <div class="flex-row-center">
-        <p v-if="feedback" :class="{ correct: isCorrect, incorrect: !isCorrect }">
+        <p
+          v-if="feedback"
+          :class="{ correct: isCorrect, incorrect: !isCorrect }"
+        >
           {{ feedback }}
         </p>
 
-        <Button v-if="showNextButton" @click="goToNextQuestion" size="small" customClass="secondary">
+        <Button
+          v-if="showNextButton"
+          @click="goToNextQuestion"
+          size="small"
+          customClass="secondary"
+        >
           Question suivante
         </Button>
       </div>
       <div class="flex-row points">
-        <p> Points : {{ currentQuestion.points }}</p>
+        <p>Points : {{ currentQuestion.points }}</p>
       </div>
     </div>
     <div class="total-score">Score actuel : {{ currentScore }}</div>
@@ -113,7 +139,7 @@ export default {
       if (this.currentIndex < this.questions.length - 1) {
         this.currentIndex++;
         setTimeout(() => {
-          this.resetState(); // attend que l'affichage se fasse
+          this.resetState();
         }, 50);
       } else {
         this.$router.push({
@@ -143,7 +169,6 @@ export default {
   margin: 2rem auto;
   max-width: 700px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
 }
 
 .question-block h3 {
@@ -196,7 +221,6 @@ export default {
   font-weight: bold;
   color: var(--dark-green);
   width: 100%;
-
 }
 
 .songAuthor-songTitle {
@@ -213,7 +237,7 @@ export default {
   margin: 1rem 0;
   white-space: pre-line;
   border-radius: 8px;
-  font-size: .8rem;
+  font-size: 0.8rem;
 
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 100%;
@@ -221,7 +245,6 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 
 .question-block p {
   margin: 0.5rem 0;

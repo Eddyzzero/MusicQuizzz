@@ -74,6 +74,72 @@ MusicQuizzz/
    - Les points sont attribués en fonction de la difficulté
    - Répondez avant la fin du temps imparti
 
+## 🧪 Tests et Vérification
+
+1. Lancez les tests :
+
+```bash
+npm run test
+```
+
+2. Vérifiez le build de production :
+
+```bash
+npm run test:build
+```
+
+3. Vérification complète avant déploiement :
+
+```bash
+npm run check
+```
+
+## 🚀 Déploiement
+
+### Prérequis
+
+- Node.js version >= 14
+- Accès à l'API musicale
+- Configuration des variables d'environnement
+
+### Étapes de déploiement
+
+1. **Vérification de l'environnement**
+
+   - Vérifiez la connexion à l'API
+   - Testez les variables d'environnement
+
+2. **Build et Test**
+
+   ```bash
+   npm run check
+   ```
+
+3. **Prévisualisation locale**
+
+   ```bash
+   npm run preview
+   ```
+
+4. **Hébergement recommandé**
+   - Vercel
+   - Netlify
+   - GitHub Pages
+
+### Variables d'environnement requises
+
+```env
+VITE_API_URL=https://quizz-musical-backend.airdev.be/api
+```
+
+### Vérification post-déploiement
+
+- Testez toutes les routes
+- Vérifiez le chargement des assets
+- Testez la lecture audio
+- Vérifiez le système de score
+- Testez la responsive design
+
 ## 🤝 Contribution
 
 Les contributions sont les bienvenues ! Pour contribuer :

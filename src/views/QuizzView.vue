@@ -1,18 +1,8 @@
 <template>
   <div v-if="categoryData">
-    <!--<header>
-      <TitleComponent :categoryTitle="categoryData.title" />
-    </header>-->
-
     <section>
       <!-- Affiche QuizLyrics seulement si c’est la bonne catégorie -->
       <QuizLyrics v-if="categoryData.title === 'Paroles de chansons'" :questions="filteredQuestions" />
-      <!-- 
-    <QuizBlindTest
-      v-else-if="categoryData.title === 'Blind test'"
-      :questions="filteredQuestions"
-    />
-    -->
     </section>
   </div>
   <p v-else>Chargement...</p>

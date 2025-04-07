@@ -99,9 +99,11 @@ body {
   .home-content img {
     width: 200px;
   }
+
   .home-title {
     font-size: 1.5rem;
   }
+
   .home-subtitle {
     font-size: 0.9rem;
   }
@@ -112,9 +114,11 @@ body {
   .home-content img {
     width: 250px;
   }
+
   .home-title {
     font-size: 2rem;
   }
+
   .home-subtitle {
     font-size: 0.95rem;
   }
@@ -125,9 +129,11 @@ body {
   .home-content img {
     width: 300px;
   }
+
   .home-title {
     font-size: 2.5rem;
   }
+
   .home-subtitle {
     font-size: 1rem;
   }
@@ -138,6 +144,7 @@ body {
   .home-content img {
     width: 350px;
   }
+
   .home-title {
     font-size: 2.8rem;
   }

@@ -4,7 +4,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
 import QuizView from "@/views/QuizzView.vue";
 import ResultView from "@/views/ResultView.vue";
-import NotFoundView from "@/views/NotFoundView.vue";
 import QuizBlindTest from "@/components/QuizBlindTest.vue";
 
 const routes = [
@@ -30,13 +29,10 @@ const routes = [
     component: QuizBlindTest,
     props: true,
   },
-  {
-    path: "/:pathMatch(.*)*",
-    name: "NotFound",
-    component: NotFoundView,
-  },
 ];
 
+// Créer une instance de router
+// et la configurer avec l'historique de navigation
 const router = createRouter({
   history: createWebHistory(),
   routes,

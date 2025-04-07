@@ -27,17 +27,12 @@ export default {
   align-items: center;
   padding: 1rem 2rem;
   background-color: var(--dark-green);
-  /* Default background color */
   color: var(--white);
   font-family: var(--font-family);
   position: fixed;
-  /* Keeps navbar at the top */
   top: 0;
-  /* Aligns navbar at the top of the page */
   width: 100%;
-  /* Full width of the screen */
   z-index: 1000;
-  /* Ensures navbar is on top of other elements */
 }
 
 /* Default styles */
@@ -50,7 +45,6 @@ export default {
 
 .navbar-logo:hover {
   color: var(--light-green);
-  /* Ensures color stays the same on hover */
 }
 
 .navbar-links {
@@ -61,23 +55,19 @@ export default {
 
 .navbar-links a {
   color: var(--light-green);
-  /* Default link color */
   text-decoration: none;
   font-weight: 500;
 }
 
 .navbar-links a:hover {
   color: var(--dark-green);
-  /* Hover color */
 }
 
-/* Active route styles */
 .navbar-links .router-link-active {
   font-weight: bold;
   text-decoration: underline;
 }
 
-/* Home page specific styles */
 .navbar-home {
   background-color: var(--light-green);
 }

@@ -1,14 +1,9 @@
 <template>
   <div class="answer-container">
-    <div
-      v-for="(answer, index) in answers"
-      :key="index"
-      class="answer-option"
-      @click="selectAnswer(answer)"
-    >
+    <div v-for="(answer, index) in answers" :key="index" class="answer-option" @click="selectAnswer(answer)">
       {{ answer }}
     </div>
-    <!-- Use the Btn component for the "Next Question" button -->
+    <!-- utiliser le bouton next -->
     <Button size="small" customClass="secondary" @click="nextQuestion">
       Question Suivante
     </Button>

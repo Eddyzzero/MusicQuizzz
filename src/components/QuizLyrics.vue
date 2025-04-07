@@ -1,9 +1,6 @@
 <template>
   <div v-if="questions.length > 0" class="quiz-container">
-    <div
-      v-if="currentQuestion"
-      class="question-block flex-row-center question-container"
-    >
+    <div v-if="currentQuestion" class="question-block flex-row-center question-container">
       <Timer :key="currentIndex" :duration="10" @timer-end="handleTimerEnd" />
       <div class="flex-col">
         <p class="question-number">
@@ -12,10 +9,7 @@
         <h3>{{ currentQuestion.title }}</h3>
       </div>
 
-      <p
-        v-html="formatLyrics(currentQuestion.content.lyrics)"
-        class="lyrics flex-row-center"
-      ></p>
+      <p v-html="formatLyrics(currentQuestion.content.lyrics)" class="lyrics flex-row-center"></p>
       <div class="flex-row-center">
         <p>Titre de la chanson :</p>
         <p class="songAuthor-songTitle">
@@ -27,38 +21,20 @@
         </p>
       </div>
 
-      <input
-        type="text"
-        v-model="userAnswer"
-        placeholder="Votre réponse..."
-        @keyup.enter="checkAnswer"
-      />
+      <input type="text" v-model="userAnswer" placeholder="Votre réponse..." @keyup.enter="checkAnswer" />
 
       <div class="flex-row">
-        <Button
-          @click="checkAnswer"
-          size="large"
-          customClass="secondary"
-          :disabled="isTimeUp || showNextButton"
-        >
+        <Button @click="checkAnswer" size="large" customClass="secondary" :disabled="isTimeUp || showNextButton">
           Valider
         </Button>
       </div>
 
       <div class="flex-row-center">
-        <p
-          v-if="feedback"
-          :class="{ correct: isCorrect, incorrect: !isCorrect }"
-        >
+        <p v-if="feedback" :class="{ correct: isCorrect, incorrect: !isCorrect }">
           {{ feedback }}
         </p>
 
-        <Button
-          v-if="showNextButton"
-          @click="goToNextQuestion"
-          size="small"
-          customClass="secondary"
-        >
+        <Button v-if="showNextButton" @click="goToNextQuestion" size="small" customClass="secondary">
           Question suivante
         </Button>
       </div>

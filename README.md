@@ -92,7 +92,7 @@ Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 
 - Açelya Lejeune - [@LejeuneA](https://github.com/LejeuneA)
 - Mihn trieu - [@trmnh](https://github.com/trmnh)
-- Jhon Florez - [@trmnh](https://github.com/trmnh)
+- Jhon Florez - [@Eddyzzero](https://github.com/Eddyzzero)
 
 ## 🙏 Remerciements
 
